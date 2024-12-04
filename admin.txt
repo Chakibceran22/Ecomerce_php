@@ -1,0 +1,33 @@
+username: admin
+password:admin123
+try {
+    // Example of an insert query
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt->execute([$username, $hashedPassword]);
+
+    echo "User inserted successfully!";
+} catch (PDOException $e) {
+    // Get the error code
+    $errorCode = $e->getCode();
+    
+    // Check the error code and handle accordingly
+    if ($errorCode == '23000') {
+        // This is a common error code for constraint violations (e.g., duplicate entry)
+        echo json_encode(['error' => 'Username already taken.']);
+    } elseif ($errorCode == '1062') {
+        // Duplicate entry error (e.g., unique key constraint violation)
+        echo json_encode(['error' => 'Duplicate entry: This username already exists.']);
+    } elseif ($errorCode == '1049') {
+        // Unknown database
+        echo json_encode(['error' => 'Unknown database.']);
+    } elseif ($errorCode == '1146') {
+        // Table doesn't exist
+        echo json_encode(['error' => 'Table does not exist.']);
+    } elseif ($errorCode == '1064') {
+        // Syntax error in SQL query
+        echo json_encode(['error' => 'Syntax error in SQL query.']);
+    } else {
+        // Catch other types of errors
+        echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+    }
+}

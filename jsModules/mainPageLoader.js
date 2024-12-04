@@ -24,8 +24,8 @@ const fetchProducts = async () => {
     }
   };
   
-  window.onload = fetchProducts; // Calling fetchProducts on page load
-  const login = async() => {//this function works chakib use it for later
+  window.onload = fetchProducts; 
+  const login = async() => {
     try{
         const data = {
             username: "chakib",
