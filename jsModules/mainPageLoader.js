@@ -4,7 +4,7 @@ let cart = [];
 // Refactored fetchProducts using async/await
 const fetchProducts = async () => {
     try {
-      const response = await fetch("routes/products.php");
+      const response = await fetch("http://localhost/TP_Projects/Ecomerce/routes/products.php");
   
       if (!response.ok) {
         throw new Error("Error fetching products: " + response.statusText);
@@ -24,8 +24,8 @@ const fetchProducts = async () => {
     }
   };
   
-  window.onload = fetchProducts; // Calling fetchProducts on page load
-  const login = async() => {//this function works chakib use it for later
+  window.onload = fetchProducts; 
+  const login = async() => {
     try{
         const data = {
             username: "chakib",
