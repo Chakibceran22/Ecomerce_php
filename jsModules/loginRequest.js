@@ -7,7 +7,7 @@ const handleLoginRequest = async(event) => {
         password
     }
     try{
-        const response = await fetch('routes/login.php', {
+        const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/login.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ const handleLoginRequest = async(event) => {
         const result = await response.json();
         if(result.status == 'success'){
             alert(result.success);
-            window.location.href = '/TP_Projects/Ecomerce/mainPage.html';
+            window.location.href = '/TP_Projects/Ecomerce/views/mainPage.html';
         }
         else{
             alert(result.error);

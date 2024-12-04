@@ -9,7 +9,7 @@ const handSignUpRequest = async (event) => {
         type
     }
     try{
-        const response = await fetch('routes/signup.php', {
+        const response = await fetch('/TP_Projects/Ecomerce/routes/signup.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ const handSignUpRequest = async (event) => {
         if(result.status == 'Created'){
             alert(result.message);
             
-            window.location.href = '/TP_Projects/Ecomerce/loginPage.html';
+            window.location.href = '/TP_Projects/Ecomerce/views/loginPage.html';
         }
         else{
             alert(result.error)
