@@ -1,10 +1,10 @@
 const handleAddProduct = async (event) => {
     event.preventDefault();
     const name = document.getElementById('product-name').value;
-    const price = document.getElementById('product-price').value;
+    const price = parseFloat( document.getElementById('product-price').value);
     const description = document.getElementById('product-description').value;
     const image = document.getElementById('product-image-url').value;
-    const stock = document.getElementById('product-stock').value;
+    const stock = parseInt(document.getElementById('product-stock').value);
 
     const data = {
         name,
@@ -28,7 +28,5 @@ const handleAddProduct = async (event) => {
     }
 }
 
-const goBack = () => {
-    
-}
+
 
