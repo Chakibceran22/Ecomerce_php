@@ -5,36 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Produit - Catalogue Premium</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-        :root {
-            --primary: #2e1065;
-            --secondary: #7c3aed;
-            --accent: #c084fc;
-            --success: #10b981;
-        }
-
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .btn-gradient {
-            background: linear-gradient(45deg, var(--secondary), var(--accent));
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-gradient:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="../jsModules/addProduct.js"></script>
 </head>
 <body class="bg-gray-50">
     <header class="bg-white shadow-sm sticky top-0 z-50 backdrop-filter backdrop-blur-lg bg-opacity-90">
@@ -44,7 +16,7 @@
     </header>
 
     <main class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <form class="bg-white rounded-xl shadow-md p-8 space-y-6">
+        <form class="bg-white rounded-xl shadow-md p-8 space-y-6" onsubmit="handleAddProduct(event)">
             <div>
                 <label for="product-name" class="block text-sm font-medium text-gray-700 mb-2">Nom du Produit</label>
                 <input type="text" id="product-name" name="product-name" required 

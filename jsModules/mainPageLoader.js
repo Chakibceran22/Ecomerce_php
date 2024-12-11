@@ -3,72 +3,28 @@ let cart = [];
 
 // Refactored fetchProducts using async/await
 const fetchProducts = async () => {
-    try {
-      const response = await fetch("http://localhost/TP_Projects/Ecomerce/routes/products.php");
-  
-      if (!response.ok) {
-        throw new Error("Error fetching products: " + response.statusText);
-      }
-  
-      const fetchedProducts = await response.json();
+  try {
+    const response = await fetch(
+      "http://localhost/TP_Projects/Ecomerce/routes/products.php"
+    );
 
-  
-      // Push the fetched products into the global array
-      products.push(...fetchedProducts);
-  
-      // Display the products in the DOM
-      displayProducts();
-      setupFilters(); // Setup filters after fetching products
-    } catch (error) {
-      console.error("Error:", error);
+    if (!response.ok) {
+      throw new Error("Error fetching products: " + response.statusText);
     }
-  };
-  
-  window.onload = fetchProducts; 
-  const login = async() => {
-    try{
-        const data = {
-            username: "chakib",
-            password: "imane"
-        }
-        const response = await fetch("routes/login.php",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        if(!response.ok){
-          throw new Error("Error fetching users: " + response.statusText);
-        }
-        console.log(response);
 
-        const fetcheUser = await response.json(); 
-        console.log(fetcheUser);
-    }
-    catch(error){
-        console.error("Error:", error);
-    }
-  }
-  
+    const fetchedProducts = await response.json();
 
+    // Push the fetched products into the global array
+    products.push(...fetchedProducts);
 
-
-
-const fetchUsers = async() => {
-  try{
-        const response = await fetch("routes/users.php");
-        if(!response.ok){
-          throw new Error("Error fetching users: " + response.statusText);
-        }
-        const fetchedUsers = await response.json();
-        console.log(fetchedUsers);
-        return;
-  }
-  catch (error) {
+    // Display the products in the DOM
+    displayProducts();
+    setupFilters();
+  } catch (error) {
     console.error("Error:", error);
   }
 };
+window.onload = fetchProducts;
 
 // Initialize
 
@@ -79,7 +35,6 @@ function displayProducts(productsToShow = products) {
 
   productsToShow.forEach((product, index) => {
     const inCart = cart.some((item) => item.id === product.id);
-    
 
     const card = document.createElement("div");
     card.className =
@@ -87,32 +42,26 @@ function displayProducts(productsToShow = products) {
     card.style.animationDelay = `${index * 100}ms`;
     card.innerHTML = `
                     <div class="relative">
-                        <img src="${product.image}" alt="${
-      product.name
-    }" class="w-full h-64 object-cover">
-                        ${
-                          inCart
-                            ? `
+                        <img src="${product.image}" alt="${product.name
+      }" class="w-full h-80 object-cover">
+                        ${inCart
+        ? `
                             <div class="added-badge absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                                 Dans le panier
                             </div>
                         `
-                            : ""
-                        }
+        : ""
+      }
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">${
-                          product.name
-                        }</h3>
+                        <h3 class="text-xl font-semibold mb-2">${product.name
+      }</h3>
                         <p class="text-gray-600 mb-4">${product.description}</p>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-2xl font-bold text-purple-600">${product.price.toLocaleString(
-                              "fr-FR",
-                              { style: "currency", currency: "EUR" }
-                            )}</span>
-                            <span class="text-sm text-gray-500">Stock: ${
-                              product.stock
-                            }</span>
+                            <span class="text-2xl font-bold text-purple-600">${product.price
+      }&euro;</span>
+                            <span class="text-sm text-gray-500">Stock: ${product.stock
+      }</span>
                         </div>
                         <button onclick="addToCart(${product.id})" 
                                 class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
@@ -159,21 +108,19 @@ function updateCart() {
       return `
                     <div class="cart-item flex justify-between items-center py-4 border-b border-gray-100">
                         <div class="flex items-center gap-4">
-                            <img src="${item.image}" alt="${
-        item.name
-      }" class="w-16 h-16 object-cover rounded-lg">
+                            <img src="${item.image}" alt="${item.name
+        }" class="w-16 h-16 object-cover rounded-lg">
                             <div>
                                 <h4 class="font-medium">${item.name}</h4>
-                                <p class="text-gray-600">Quantité: ${
-                                  item.quantity
-                                }</p>
+                                <p class="text-gray-600">Quantité: ${item.quantity
+        }</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="font-semibold">${itemTotal.toLocaleString(
-                              "fr-FR",
-                              { style: "currency", currency: "EUR" }
-                            )}</span>
+          "fr-FR",
+          { style: "currency", currency: "EUR" }
+        )}</span>
                             <button onclick="removeFromCart(${item.id})" 
                                     class="text-red-500 hover:text-red-700 transition">
                                 Supprimer
@@ -190,9 +137,9 @@ function updateCart() {
                     <span class="text-xl font-semibold">Total</span>
                     <span class="text-2xl font-bold text-purple-600">
                         ${total.toLocaleString("fr-FR", {
-                          style: "currency",
-                          currency: "EUR",
-                        })}
+      style: "currency",
+      currency: "EUR",
+    })}
                     </span>
                 </div>
                 <button onclick="checkout()" 
@@ -204,24 +151,20 @@ function updateCart() {
 }
 
 function removeFromCart(productId) {
-    const productInCart = cart.find((p) => p.id == productId);
- if(productInCart.quantity == 1){
-    
-  cart = cart.filter((item) => item.id != productId);
-  console.log(cart);
-  updateCart();
-  displayProducts();
-  showToast("Produit retiré du panier !");
- } 
- else
- {
+  const productInCart = cart.find((p) => p.id == productId);
+  if (productInCart.quantity == 1) {
+    cart = cart.filter((item) => item.id != productId);
+    console.log(cart);
+    updateCart();
+    displayProducts();
+    showToast("Produit retiré du panier !");
+  } else {
     let index = cart.findIndex((item) => item.id == productId);
-    
+
     cart[index].quantity--;
     updateCart();
     showToast("stock deinuished !");
-
- }
+  }
 }
 
 function checkout() {
@@ -233,7 +176,6 @@ function checkout() {
   }
 }
 
-// Filters
 function setupFilters() {
   const searchInput = document.getElementById("search");
   const priceFilter = document.getElementById("price-filter");
@@ -241,11 +183,11 @@ function setupFilters() {
   function filterProducts() {
     const searchTerm = searchInput.value.toLowerCase();
     const maxPrice = parseFloat(priceFilter.value) || Infinity;
-
+    // ||
+    // product.description.toLowerCase().includes(searchTerm) you can implement this her eif you realy want to search in description too
     const filtered = products.filter((product) => {
       return (
-        (product.name.toLowerCase().includes(searchTerm) ||
-          product.description.toLowerCase().includes(searchTerm)) &&
+        (product.name.toLowerCase().includes(searchTerm)/*you can pput it here */ ) &&
         product.price <= maxPrice
       );
     });
@@ -269,5 +211,3 @@ function showToast(message) {
     toast.style.display = "none";
   }, 1000);
 }
-
-

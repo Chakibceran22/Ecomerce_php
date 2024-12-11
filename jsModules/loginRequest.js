@@ -7,6 +7,7 @@ const handleLoginRequest = async(event) => {
         password
     }
     try{
+        console.log(data);
         const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/login.php', {
             method: 'POST',
             headers: {
@@ -15,14 +16,26 @@ const handleLoginRequest = async(event) => {
             body: JSON.stringify(data)
         })
         const result = await response.json();
+        console.log(result.usertype);
         if(result.status == 'success'){
             alert(result.success);
-            window.location.href = '/TP_Projects/Ecomerce/views/mainPage.html';
+            if(result.usertype == 'seller')
+            {
+                window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';
+                return;
+            }
+            if(result.usertype == 'buyer')
+            {
+                window.location.href = '/TP_Projects/Ecomerce/views/userDahsbord.html';
+                return;
+            }
+            // window.location.href = '/TP_Projects/Ecomerce/views/mainPage.html';
         }
         else{
             alert(result.error);
         }
     }catch(err){
+        console.log('error here');
         console.log(err);
     }
 }
