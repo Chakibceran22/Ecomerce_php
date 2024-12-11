@@ -45,15 +45,15 @@ const handleLoginRequest = async(event) => {
         console.log(result.status);
         console.log(result);
         if(result.status == 'success'){
-            alert(result.success);
+             showToast('Login Success');
             if(result.usertype == 'seller')
             {
-                window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';
+                setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';}, 1500);
                 return;
             }
             if(result.usertype == 'buyer')
             {
-                window.location.href = '/TP_Projects/Ecomerce/views/userDahsbord.html';
+                setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/userDahsbord.html';}, 1500);
                 return;
             }
             // window.location.href = '/TP_Projects/Ecomerce/views/mainPage.html';
@@ -66,3 +66,14 @@ const handleLoginRequest = async(event) => {
         console.log(err);
     }
 }
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.className =
+      "toast fixed bottom-8 right-8 bg-white rounded-lg shadow-lg px-6 py-4 border-l-4 border-purple-500";
+    toast.textContent = message;
+    toast.style.display = "block";
+  
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 1500);
+  }

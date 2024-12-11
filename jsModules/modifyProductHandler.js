@@ -8,7 +8,6 @@ const handleModifyProduct = async(event) => {
     const stock = parseInt(document.getElementById('product-stock').value);
     const id = parseInt(urlParams.get('id'));
     const data = { name, price, description, image, stock, id };
-    console.log(JSON.stringify(data));
 
 
     const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/modifyProduct.php', {
@@ -19,5 +18,25 @@ const handleModifyProduct = async(event) => {
         body: JSON.stringify({ name, price, description, image, stock, id })
     });
     const result = await response.json();
-    console.log(result);
+    if(result.status == "Updated") {
+        showToast('Product modified successfully');
+        setTimeout(() => {
+            window.location.href = 'http://localhost/TP_Projects/Ecomerce/views/sellerProducts.html';
+        }, 1500);
+    } else {
+        showToast(result.error);
+    }
+}
+
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.className =
+      "toast fixed bottom-8 right-8 bg-white rounded-lg shadow-lg px-6 py-4 border-l-4 border-purple-500";
+    toast.textContent = message;
+    toast.style.display = "block";
+  
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 1500);
 }

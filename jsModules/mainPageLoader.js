@@ -204,7 +204,7 @@ function setupFilters() {
 }
 
 // Toast Notifications
-function showToast(message) {
+ function showToast(message) {
   const toast = document.getElementById("toast");
   toast.className =
     "toast fixed bottom-8 right-8 bg-white rounded-lg shadow-lg px-6 py-4 border-l-4 border-purple-500";
@@ -215,3 +215,5 @@ function showToast(message) {
     toast.style.display = "none";
   }, 1000);
 }
+
+

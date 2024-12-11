@@ -20,12 +20,12 @@ const handSignUpRequest = async (event) => {
         
         
         if(result.status == 'Created'){
-            alert(result.message);
+            showToast(result.message);
             
-            window.location.href = '/TP_Projects/Ecomerce/views/loginPage.html';
+            setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/loginPage.html';}, 1500);
         }
         else{
-            alert(result.error)
+            showToast(result.error);
         }
     }catch(err){
         console.log(err);
@@ -33,3 +33,14 @@ const handSignUpRequest = async (event) => {
     }
 
 }
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.className =
+      "toast fixed bottom-8 right-8 bg-white rounded-lg shadow-lg px-6 py-4 border-l-4 border-purple-500";
+    toast.textContent = message;
+    toast.style.display = "block";
+  
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 1500);
+  }

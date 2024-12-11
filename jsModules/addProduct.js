@@ -22,11 +22,23 @@ const handleAddProduct = async (event) => {
     });
     const result = await response.json();
     if(result.status == 'Created') {
-        alert('Product added successfully');
+        showToast('Product added successfully');
     } else {
-        alert(result.error);
+        showToast(result.error)
     }
 }
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.className =
+      "toast fixed bottom-8 right-8 bg-white rounded-lg shadow-lg px-6 py-4 border-l-4 border-purple-500";
+    toast.textContent = message;
+    toast.style.display = "block";
+  
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 1500);
+  }
 
 
 
