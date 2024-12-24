@@ -54,7 +54,6 @@ function displayProducts(productsToShow = products) {
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
-                        <p class="text-gray-600 mb-4">${product.description}</p>
                         <div class="flex justify-between items-center mb-4">
                             <span class="text-2xl font-bold text-purple-600">${
                               product.price
@@ -65,7 +64,7 @@ function displayProducts(productsToShow = products) {
                         </div>
                         <button onclick="addToCart(${product.id})" 
                                 class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
-                            Ajouter au panier
+                            Visualiser Produit
                         </button>
                     </div>
                 `;

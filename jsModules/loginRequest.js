@@ -46,7 +46,7 @@ const handleLoginRequest = async(event) => {
         console.log(result);
         if(result.status == 'success'){
              showToast('Login Success');
-            if(result.usertype == 'seller')
+            if(result.usertype == 'admin')
             {
                 setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';}, 1500);
                 return;

@@ -2,11 +2,9 @@ const handSignUpRequest = async (event) => {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const type = document.getElementById('user-type').value;
     const data = {
         username,
         password,
-        type
     }
     try{
         const response = await fetch('/TP_Projects/Ecomerce/routes/signup.php', {

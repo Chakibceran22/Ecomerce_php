@@ -13,6 +13,7 @@ const handleAddProduct = async (event) => {
         description,
         stock 
     }
+
     const  response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/addProduct.php', {
         method: 'POST',
         headers: {
