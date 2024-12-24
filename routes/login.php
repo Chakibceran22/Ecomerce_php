@@ -38,6 +38,22 @@
             {
                 $_SESSION['user'] = $user;
                 $_SESSION['access_granted'] = true;
+                if($user['type'] == 'admin')
+                {
+                    //get the products from the database
+                    try{
+                        $query = "SELECT * FROM products";
+                        $stmt = $connection->prepare($query);
+                        $stmt->execute();
+                        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        echo json_encode(['success' => 'User logged in','status' => 'success','usertype' => $user['type'],'username' => $user['username'],'products' => $products]);
+                        exit;}
+                    catch(PDOException $e){
+                        echo json_encode(array('error' => 'An error occurred. Please try again later', 'status' => 'Failed', 'message' => $e->getMessage()));
+                        http_response_code(500);
+                        exit();
+                    }
+                }
                 try{
                     //this is to get the cart items fromm the data base
                     $query = "

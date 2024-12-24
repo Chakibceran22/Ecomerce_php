@@ -20,12 +20,13 @@ const handleLoginRequest = async(event) => {
             body: JSON.stringify(data)
         })
         const result = await response.json();
+        console.log(result);
         
         if(result.status == 'success'){
              showToast('Login Success');
             if(result.usertype == 'admin')
             {
-                
+                localStorage.setItem('products', JSON.stringify(result.products));
                 setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';}, 1500);
                 return;
             }
