@@ -29,7 +29,7 @@ window.onload = fetchProducts;
 // Initialize
 
 // Display Products
-function displayProducts(productsToShow = products) {
+ function displayProducts(productsToShow = products) {
   const grid = document.getElementById("products-grid");
   grid.innerHTML = "";
 
@@ -94,7 +94,6 @@ function addToCart(productId) {
   showToast("Produit ajouté au panier !");
   displayProducts(); // Refresh products to show "Dans le panier" badge
 }
-
 function updateCart() {
   const cartItems = document.getElementById("cart-items");
   const cartTotal = document.getElementById("cart-total");
@@ -177,7 +176,7 @@ function checkout() {
   }
 }
 
-function setupFilters() {
+ function setupFilters() {
   const searchInput = document.getElementById("search");
   const priceFilter = document.getElementById("price-filter");
 
