@@ -2,11 +2,12 @@
     include('../modules/db.php');
     header('Content-Type: application/json');
     session_start();
-    session_unset();
-    if(isset($_SESSION['user'])){
-        echo json_encode(['success' => 'User already logged in','status' => 'success']);
-        exit;
-    }
+    // session_unset();
+     //for now this only to test the fuctionality in the website 
+    // if(isset($_SESSION['user']) ){
+    //     echo json_encode(['success' => 'User already logged in','status' => 'success','usertype' => $_SESSION['user']['type'],'username' => $_SESSION['user']['username']]);
+    //     exit;
+    // }
     if($_SERVER['REQUEST_METHOD'] !== 'POST')
     {
         echo json_encode(array('error' => 'Only POST requests are allowed'));
@@ -36,7 +37,8 @@
             if(password_verify($password, $user['password']))
             {
                 $_SESSION['user'] = $user;
-                echo json_encode(['success' => 'User logged in successfully','status' => 'success']);
+                $_SESSION['access_granted'] = true;
+                echo json_encode(['success' => 'User logged in successfully','status' => 'success','usertype' => $user['type'],'user_id' => $_SESSION['user']['username']]);
                 exit;
             }
             else{

@@ -13,24 +13,18 @@
 
     $username = $data['username'];
     $password = $data['password'];
-    $type = $data['type'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     
-    if(empty($username) || empty($password) || empty($type))
+    if(empty($username) || empty($password) )
     {
         echo json_encode(array('error' => 'All input fields are required'));
         http_response_code(400);
         exit();
     }
-    if($type !== 'admin' && $type !== 'buyer' && $type !== 'seller')
-    {
-        echo json_encode(array('error' => 'Invalid user type'));
-        http_response_code(400);
-        exit();
-    }
+   
     try{
-        $query = $connection->prepare('INSERT INTO users ( username ,password,type) VALUES (?, ?, ?)');
-        $query->execute([$username, $hashed_password, $type]);
+        $query = $connection->prepare('INSERT INTO users ( username ,password) VALUES (?, ?)');
+        $query->execute([$username, $hashed_password]);
         echo json_encode(array('message' => 'User created successfully', 'status' => 'Created'));
 
     }catch(Exception $e){

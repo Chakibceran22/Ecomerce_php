@@ -3,72 +3,28 @@ let cart = [];
 
 // Refactored fetchProducts using async/await
 const fetchProducts = async () => {
-    try {
-      const response = await fetch("http://localhost/TP_Projects/Ecomerce/routes/products.php");
-  
-      if (!response.ok) {
-        throw new Error("Error fetching products: " + response.statusText);
-      }
-  
-      const fetchedProducts = await response.json();
+  try {
+    const response = await fetch(
+      "http://localhost/TP_Projects/Ecomerce/routes/products.php"
+    );
 
-  
-      // Push the fetched products into the global array
-      products.push(...fetchedProducts);
-  
-      // Display the products in the DOM
-      displayProducts();
-      setupFilters(); // Setup filters after fetching products
-    } catch (error) {
-      console.error("Error:", error);
+    if (!response.ok) {
+      throw new Error("Error fetching products: " + response.statusText);
     }
-  };
-  
-  window.onload = fetchProducts; 
-  const login = async() => {
-    try{
-        const data = {
-            username: "chakib",
-            password: "imane"
-        }
-        const response = await fetch("routes/login.php",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        if(!response.ok){
-          throw new Error("Error fetching users: " + response.statusText);
-        }
-        console.log(response);
 
-        const fetcheUser = await response.json(); 
-        console.log(fetcheUser);
-    }
-    catch(error){
-        console.error("Error:", error);
-    }
-  }
-  
+    const fetchedProducts = await response.json();
 
+    // Push the fetched products into the global array
+    products.push(...fetchedProducts);
 
-
-
-const fetchUsers = async() => {
-  try{
-        const response = await fetch("routes/users.php");
-        if(!response.ok){
-          throw new Error("Error fetching users: " + response.statusText);
-        }
-        const fetchedUsers = await response.json();
-        console.log(fetchedUsers);
-        return;
-  }
-  catch (error) {
+    // Display the products in the DOM
+    displayProducts();
+    setupFilters();
+  } catch (error) {
     console.error("Error:", error);
   }
 };
+window.onload = fetchProducts;
 
 // Initialize
 
@@ -79,17 +35,13 @@ function displayProducts(productsToShow = products) {
 
   productsToShow.forEach((product, index) => {
     const inCart = cart.some((item) => item.id === product.id);
-    
 
     const card = document.createElement("div");
-    card.className =
-      "product-card bg-white rounded-xl shadow-md overflow-hidden";
+    card.className ="product-card bg-white rounded-xl shadow-md overflow-hidden";
     card.style.animationDelay = `${index * 100}ms`;
     card.innerHTML = `
                     <div class="relative">
-                        <img src="${product.image}" alt="${
-      product.name
-    }" class="w-full h-64 object-cover">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
                         ${
                           inCart
                             ? `
@@ -101,22 +53,18 @@ function displayProducts(productsToShow = products) {
                         }
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">${
-                          product.name
-                        }</h3>
-                        <p class="text-gray-600 mb-4">${product.description}</p>
+                        <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-2xl font-bold text-purple-600">${product.price.toLocaleString(
-                              "fr-FR",
-                              { style: "currency", currency: "EUR" }
-                            )}</span>
+                            <span class="text-2xl font-bold text-purple-600">${
+                              product.price
+                            }&euro;</span>
                             <span class="text-sm text-gray-500">Stock: ${
                               product.stock
                             }</span>
                         </div>
                         <button onclick="addToCart(${product.id})" 
                                 class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
-                            Ajouter au panier
+                            Visualiser Produit
                         </button>
                     </div>
                 `;
@@ -204,24 +152,20 @@ function updateCart() {
 }
 
 function removeFromCart(productId) {
-    const productInCart = cart.find((p) => p.id == productId);
- if(productInCart.quantity == 1){
-    
-  cart = cart.filter((item) => item.id != productId);
-  console.log(cart);
-  updateCart();
-  displayProducts();
-  showToast("Produit retiré du panier !");
- } 
- else
- {
+  const productInCart = cart.find((p) => p.id == productId);
+  if (productInCart.quantity == 1) {
+    cart = cart.filter((item) => item.id != productId);
+    console.log(cart);
+    updateCart();
+    displayProducts();
+    showToast("Produit retiré du panier !");
+  } else {
     let index = cart.findIndex((item) => item.id == productId);
-    
+
     cart[index].quantity--;
     updateCart();
     showToast("stock deinuished !");
-
- }
+  }
 }
 
 function checkout() {
@@ -233,7 +177,6 @@ function checkout() {
   }
 }
 
-// Filters
 function setupFilters() {
   const searchInput = document.getElementById("search");
   const priceFilter = document.getElementById("price-filter");
@@ -241,11 +184,13 @@ function setupFilters() {
   function filterProducts() {
     const searchTerm = searchInput.value.toLowerCase();
     const maxPrice = parseFloat(priceFilter.value) || Infinity;
-
+    // ||
+    // product.description.toLowerCase().includes(searchTerm) you can implement this her eif you realy want to search in description too
     const filtered = products.filter((product) => {
       return (
-        (product.name.toLowerCase().includes(searchTerm) ||
-          product.description.toLowerCase().includes(searchTerm)) &&
+        product.name
+          .toLowerCase()
+          .includes(searchTerm) /*you can pput it here */ &&
         product.price <= maxPrice
       );
     });
@@ -258,7 +203,7 @@ function setupFilters() {
 }
 
 // Toast Notifications
-function showToast(message) {
+ function showToast(message) {
   const toast = document.getElementById("toast");
   toast.className =
     "toast fixed bottom-8 right-8 bg-white rounded-lg shadow-lg px-6 py-4 border-l-4 border-purple-500";
