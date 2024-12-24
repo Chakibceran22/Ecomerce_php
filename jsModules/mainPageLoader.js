@@ -41,7 +41,7 @@ window.onload = fetchProducts;
     card.style.animationDelay = `${index * 100}ms`;
     card.innerHTML = `
                     <div class="relative">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-96 object-cover">
                         ${
                           inCart
                             ? `
@@ -62,8 +62,7 @@ window.onload = fetchProducts;
                               product.stock
                             }</span>
                         </div>
-                        <button onclick="addToCart(${product.id})" 
-                                class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
+                        <button onclick="showToast('Connecter vous pour voire les produits !')" class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
                             Visualiser Produit
                         </button>
                     </div>
