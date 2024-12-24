@@ -28,10 +28,7 @@
         $query = $connection->prepare('INSERT INTO products (name, price,image, description, stock) VALUES (?, ?, ?, ?, ?)');
         $query->execute([$name, $price, $image, $description, $stock]);
 
-        $product_id = $connection->lastInsertId();
 
-        $insertsellerProduct = $connection->prepare('INSERT INTO sellerproducts (user_id, product_id) VALUES (?,?);');
-        $insertsellerProduct->execute([$_SESSION['user']['username'], $product_id]);
 
         echo json_encode(array('message' => 'Product added successfully', 'status' => 'Created'));
 

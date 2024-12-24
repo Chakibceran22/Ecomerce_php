@@ -11,28 +11,10 @@
         }
         
         
-        $sql = "SELECT 
-            sellerproducts.id AS sellerproducts_id,
-            users.username AS user_username,
-            users.type AS user_type,
-            products.id AS product_id,
-            products.name AS product_name,
-            products.description AS product_desc,
-            products.price AS product_price,
-            products.image AS product_image,
-            products.stock AS product_stock
-        FROM 
-            sellerproducts
-        JOIN 
-            users ON sellerproducts.user_id = users.username  
-        JOIN 
-            products ON sellerproducts.product_id = products.id
-        WHERE 
-            users.username = :username ;";
+        $sql = "SELECT * FROM products";
             
 
         $querry = $connection->prepare($sql);
-        $querry->bindParam(':username', $_SESSION['user']['username'], PDO::PARAM_STR);
         $querry->execute();
 
         $result = $querry->fetchAll(PDO::FETCH_ASSOC);

@@ -59,7 +59,7 @@ const handleLoginRequest = async(event) => {
             // window.location.href = '/TP_Projects/Ecomerce/views/mainPage.html';
         }
         else{
-            alert(result.error);
+            showToast(result.error)
         }
     }catch(err){
         console.log('error here');

@@ -21,16 +21,15 @@ const getProducts = async () => {
             card.className = "product-card bg-white rounded-xl shadow-md overflow-hidden";
             card.innerHTML =  `
                 <div class="relative">
-                    <img src="${product.product_image}" alt="${product.product_name}" class="w-full h-80 object-cover">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">${product.product_name}</h3>
-                    <p class="text-gray-600 mb-4">${product.product_desc}</p>
+                    <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-2xl font-bold text-purple-600">${product.product_price}&euro;</span>
-                        <span class="text-sm text-gray-500">Stock: ${product.product_stock}</span>
+                        <span class="text-2xl font-bold text-purple-600">${product.price}&euro;</span>
+                        <span class="text-sm text-gray-500">Stock: ${product.stock}</span>
                     </div>
-                    <button class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold" data-product-id="${product.product_id}">
+                    <button class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold" data-product-id="${product.id}">
                         Modifier le produit
                     </button>
                 </div>
