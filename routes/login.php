@@ -38,8 +38,42 @@
             {
                 $_SESSION['user'] = $user;
                 $_SESSION['access_granted'] = true;
-                echo json_encode(['success' => 'User logged in successfully','status' => 'success','usertype' => $user['type'],'user_id' => $_SESSION['user']['username']]);
-                exit;
+                try{
+                    //this is to get the cart items fromm the data base
+                    $query = "
+                        SELECT 
+                            products.id, 
+                            products.name, 
+                            products.image, 
+                            products.description, 
+                            products.price, 
+                            products.stock, 
+                            cart.qnt
+                        FROM 
+                            users
+                        JOIN 
+                            cart ON users.username = cart.user_id
+                        JOIN 
+                            products ON cart.product_id = products.id
+                        WHERE 
+                            users.username = :username
+                    ";
+
+             
+                    $stmt = $connection->prepare($query);
+                    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $cart = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    echo json_encode(['success' => 'User logged in','status' => 'success','usertype' => $user['type'],'username' => $user['username'],'cart' => $cart]);
+            
+                }catch(PDOException $e)
+                {
+                    echo json_encode(array('error' => 'An error occurred. Please try again later', 'status' => 'Failed', 'message' => $e->getMessage()));
+            
+                    http_response_code(500);
+                    exit();
+                }
             }
             else{
                 echo json_encode(['error' => 'Invalid password']);

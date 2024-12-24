@@ -1,25 +1,4 @@
-window.onload = async() => {
-    const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/login.php', {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body : JSON.stringify()
-    });
-    const  result = await response.json();
-    if( result.status == 'success'){
-        if(result.usertype == 'seller')
-        {
-            window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';
-            return;
-        }
-        if(result.usertype == 'buyer')
-        {
-            window.location.href = '/TP_Projects/Ecomerce/views/userDahsbord.html';
-            return;
-        }
-    }
-}
+
 
 
 
@@ -41,18 +20,18 @@ const handleLoginRequest = async(event) => {
             body: JSON.stringify(data)
         })
         const result = await response.json();
-        console.log(result.usertype);
-        console.log(result.status);
-        console.log(result);
+        
         if(result.status == 'success'){
              showToast('Login Success');
             if(result.usertype == 'admin')
             {
+                
                 setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/sellerDashbord.html';}, 1500);
                 return;
             }
             if(result.usertype == 'buyer')
             {
+                localStorage.setItem('cart', JSON.stringify(result.cart));
                 setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/userDahsbord.html';}, 1500);
                 return;
             }

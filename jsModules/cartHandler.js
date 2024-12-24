@@ -1,15 +1,7 @@
 let cart = []
 
 const getItems = async() => {
-    const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/getCartItems.php', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const result = await response.json();
-    console.log(result);
-    cart = result;
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
     updateCart();
 }
 window.onload = getItems;
