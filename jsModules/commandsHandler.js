@@ -23,15 +23,15 @@ const displayCommands = async () => {
         let statusClass = '';
         if (status === 'pending') {
             statusClass = 'bg-yellow-100 text-yellow-800';
-            buttonExist = `<button class="px-3 py-1 btn-gradient text-white font-bold rounded-lg hover:opacity-90 transition">
+            buttonExist = `<button class="px-3 py-1 btn-gradient text-white font-bold rounded-lg hover:opacity-90 transition" onclick="acceptCommand(${command.id})">
                         Accepter
                     </button>
-                    <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition">
+                    <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition" onclick="refuseCommand(${command.id})">
                         Refuser
                     </button>`
         } else if (status === 'accepted') {
             statusClass = 'bg-green-100 text-green-800';
-        } else if (status === 'rejected') {
+        } else if (status === 'refused') {
             statusClass = 'bg-red-100 text-red-800';
         }
 
@@ -61,3 +61,28 @@ const displayCommands = async () => {
 };
 
 
+const acceptCommand = async(id) => {
+    const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/acceptCommand.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+    })
+    const result = await response.json();
+    console.log(result);
+    window.location.reload();
+
+}
+const refuseCommand = async(id) => {
+    const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/refuseCommand.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+    })
+    const result = await response.json();
+    console.log(result);
+    window.location.reload();
+}
