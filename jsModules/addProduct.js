@@ -23,10 +23,21 @@ const handleAddProduct = async (event) => {
     });
     const result = await response.json();
     if(result.status == 'Created') {
+        // const getProductsResponse = await fetch('http://localhost/TP_Projects/Ecomerce/routes/products.php',{
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }
+        // })
+        // const resultProducts = await getProductsResponse.json();
+        // localStorage.setItem('products', JSON.stringify(resultProducts));
         showToast('Product added successfully');
+        window.location.reload();
     } else {
         showToast(result.error)
     }
+
+    
 }
 
 function showToast(message) {

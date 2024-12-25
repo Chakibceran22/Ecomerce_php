@@ -29,7 +29,7 @@ window.onload = fetchProducts;
 // Initialize
 
 // Display Products
-function displayProducts(productsToShow = products) {
+ function displayProducts(productsToShow = products) {
   const grid = document.getElementById("products-grid");
   grid.innerHTML = "";
 
@@ -41,7 +41,7 @@ function displayProducts(productsToShow = products) {
     card.style.animationDelay = `${index * 100}ms`;
     card.innerHTML = `
                     <div class="relative">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-96 object-cover">
                         ${
                           inCart
                             ? `
@@ -62,8 +62,7 @@ function displayProducts(productsToShow = products) {
                               product.stock
                             }</span>
                         </div>
-                        <button onclick="addToCart(${product.id})" 
-                                class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
+                        <button onclick="showToast('Connecter vous pour voire les produits !')" class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
                             Visualiser Produit
                         </button>
                     </div>
@@ -95,61 +94,6 @@ function addToCart(productId) {
   displayProducts(); // Refresh products to show "Dans le panier" badge
 }
 
-function updateCart() {
-  const cartItems = document.getElementById("cart-items");
-  const cartTotal = document.getElementById("cart-total");
-  let total = 0;
-
-  cartItems.innerHTML = cart
-    .map((item) => {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
-      return `
-                    <div class="cart-item flex justify-between items-center py-4 border-b border-gray-100">
-                        <div class="flex items-center gap-4">
-                            <img src="${item.image}" alt="${
-        item.name
-      }" class="w-16 h-16 object-cover rounded-lg">
-                            <div>
-                                <h4 class="font-medium">${item.name}</h4>
-                                <p class="text-gray-600">Quantité: ${
-                                  item.quantity
-                                }</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <span class="font-semibold">${itemTotal.toLocaleString(
-                              "fr-FR",
-                              { style: "currency", currency: "EUR" }
-                            )}</span>
-                            <button onclick="removeFromCart(${item.id})" 
-                                    class="text-red-500 hover:text-red-700 transition">
-                                Supprimer
-                            </button>
-                        </div>
-                    </div>
-                `;
-    })
-    .join("");
-
-  cartTotal.innerHTML = cart.length
-    ? `
-                <div class="flex justify-between items-center">
-                    <span class="text-xl font-semibold">Total</span>
-                    <span class="text-2xl font-bold text-purple-600">
-                        ${total.toLocaleString("fr-FR", {
-                          style: "currency",
-                          currency: "EUR",
-                        })}
-                    </span>
-                </div>
-                <button onclick="checkout()" 
-                        class="btn-gradient w-full mt-6 py-3 rounded-lg text-white font-semibold">
-                    Finaliser l'achat
-                </button>
-            `
-    : '<p class="text-gray-500 text-center">Votre panier est vide</p>';
-}
 
 function removeFromCart(productId) {
   const productInCart = cart.find((p) => p.id == productId);
@@ -177,7 +121,7 @@ function checkout() {
   }
 }
 
-function setupFilters() {
+ function setupFilters() {
   const searchInput = document.getElementById("search");
   const priceFilter = document.getElementById("price-filter");
 

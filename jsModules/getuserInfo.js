@@ -16,4 +16,5 @@ const getUserData = async() => {
     }
 }
 
+
 window.onload = getUserData;
