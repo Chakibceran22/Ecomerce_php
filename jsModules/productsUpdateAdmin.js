@@ -9,6 +9,16 @@ const getData = async() => {
     const products = result;
     const productNumber = document.getElementById('product-number');
     productNumber.textContent = products.length;
+    const commandResponse = await fetch('http://localhost/TP_Projects/Ecomerce/routes/getAllCommands.php',{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const CommandResult = await commandResponse.json();
+    console.log(CommandResult);
+    const commands = document.getElementById('commands');
+    commands.textContent = CommandResult.length;
 
 }
 window.onload = getData;
