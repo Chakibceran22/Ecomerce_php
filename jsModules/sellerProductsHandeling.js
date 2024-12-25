@@ -25,10 +25,10 @@ const getProducts = async () => {
                     <span class="text-2xl font-bold text-purple-600">${product.price}&euro;</span>
                     <span class="text-sm text-gray-500">Stock: ${product.stock}</span>
                 </div>
-                <button class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold my-3" data-product-id="${product.id}">
+                <button class="px-4 py-2 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition my-3 w-full" data-product-id="${product.id}">
                     Modifier le produit
                 </button>
-                <button class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold my-3" data-product-id="${product.id}">
+                <button class="px-4 py-2 btn-gradient text-white font-bold rounded-lg hover:opacity-90 transition my-3 w-full" data-product-id="${product.id}">
                     Supprimer le produit
                 </button>
             </div>
