@@ -18,11 +18,17 @@ const displayCommands = async () => {
     const tableBody = document.getElementById('table-body');
     commands.map(command => {
         const status = command.status;
-
+        let buttonExist = ``
         // Determine the class based on the status
         let statusClass = '';
         if (status === 'pending') {
             statusClass = 'bg-yellow-100 text-yellow-800';
+            buttonExist = `<button class="px-3 py-1 btn-gradient text-white font-bold rounded-lg hover:opacity-90 transition">
+                        Accepter
+                    </button>
+                    <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition">
+                        Refuser
+                    </button>`
         } else if (status === 'accepted') {
             statusClass = 'bg-green-100 text-green-800';
         } else if (status === 'rejected') {
@@ -43,12 +49,7 @@ const displayCommands = async () => {
             <td class="p-3 text-right">${command.total}</td>
             <td class="p-3">
                 <div class="flex justify-center space-x-2">
-                    <button class="px-3 py-1 btn-gradient text-white font-bold rounded-lg hover:opacity-90 transition">
-                        Accepter
-                    </button>
-                    <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition">
-                        Refuser
-                    </button>
+                    ${buttonExist}
                     <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition">
                         <i class="fas fa-eye"></i>
                     </button>
