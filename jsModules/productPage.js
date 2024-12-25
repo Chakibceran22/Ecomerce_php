@@ -29,6 +29,22 @@ const addProductToCart = async () => {
     const params = new URLSearchParams(window.location.search);
     const id = parseInt(params.get("id"));
     const quantity =  parseInt(document.getElementById("quantity").value);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const productName = document.getElementById("product-name");
+    const productPrice = document.getElementById("product-price");
+    const productStock = document.getElementById("product-stock");
+    const productImage = document.getElementById("product-image");
+    const productDesc = document.getElementById("product-desc");
+    const product = {
+        id,
+        name: productName.textContent,
+        price: productPrice.textContent,
+        stock: productStock.textContent,
+        image: productImage.src,
+        desc: productDesc.textContent,
+        qnt:quantity
+    }
+    
     
     const data = {
         id,
@@ -42,11 +58,11 @@ const addProductToCart = async () => {
         body: JSON.stringify({ data})
     });
     const result = await response.json();
-    console.log(result);
 
     if(result.status == "Success"){
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
       showToast("Product Added To cart")
-
     }
   
   }

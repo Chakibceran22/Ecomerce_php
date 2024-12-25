@@ -82,6 +82,7 @@
                     $cart = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
                     echo json_encode(['success' => 'User logged in','status' => 'success','usertype' => $user['type'],'username' => $user['username'],'cart' => $cart]);
+                    exit;
             
                 }catch(PDOException $e)
                 {

@@ -1,4 +1,4 @@
-let cart = []
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let products = []
 const getUserProducts = async() => {
     const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/getUserProducts.php',{
@@ -10,16 +10,8 @@ const getUserProducts = async() => {
     const result = await response.json();
     products.push(...result.products);
     console.log(products)
-  //   if(result.status == "success"){
-  //       const products = result.products;
-  //       const length = products.length;
-  //       console.log(result.user)
-  //       for(let i =0 ; i<length;i++){
-  //           addToCart(products[i].id,products);
-            
-  //   }
-    
-  // }
+    console.log(cart)
+  
     displayProducts(products);
     setupFilters();
 }
@@ -101,7 +93,6 @@ const getUserProducts = async() => {
 //       : '<p class="text-gray-500 text-center">Votre panier est vide</p>';
 //   }
 function displayProducts(productsToShow = products ) {
-  console.log("chakib is here");
   const grid = document.getElementById("products-grid");
   grid.innerHTML = "";
   
@@ -115,7 +106,7 @@ function displayProducts(productsToShow = products ) {
     card.style.animationDelay = `${index * 100}ms`;
     card.innerHTML = `
                     <div class="relative">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-96 object-cover">
                         ${
                           inCart
                             ? `

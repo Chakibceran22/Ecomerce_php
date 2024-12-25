@@ -30,25 +30,44 @@
         $query->execute([$_SESSION['user']['username'],$product_id, $quantity]);
         $product = $query->fetch();
         echo json_encode(array('message' => 'Product added to cart', 'status' => 'Success'));
-        // if(!$product)
-        // {
-        //     echo json_encode(array('error' => 'Product not found', 'status' => 'Failed'));
-        //     http_response_code(404);
-        //     exit();
-        // }
+        exit();
+        // try{
+        //     $query = "
+        //                 SELECT 
+        //                     products.id, 
+        //                     products.name, 
+        //                     products.image, 
+        //                     products.description, 
+        //                     products.price, 
+        //                     products.stock, 
+        //                     cart.qnt
+        //                 FROM 
+        //                     users
+        //                 JOIN 
+        //                     cart ON users.username = cart.user_id
+        //                 JOIN 
+        //                     products ON cart.product_id = products.id
+        //                 WHERE 
+        //                     users.username = :username
+        //             ";
 
-        // if($product['stock'] < $quantity)
+             
+        //             $stmt = $connection->prepare($query);
+        //             $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        //             $stmt->execute();
+        //             $cart = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+        //             echo json_encode(['success' => 'User logged in','status' => 'success','usertype' => $user['type'],'username' => $user['username'],'cart' => $cart]);
+        //             exit;
+        // }catch(PDOException $e)
         // {
-        //     echo json_encode(array('error' => 'Not enough stock', 'status' => 'Failed'));
+        //     echo json_encode(array('error' => 'Data base error cant add a product','status' => 'Failed', 'message' => $e->getMessage()));
         //     http_response_code(400);
         //     exit();
         // }
-
-        // $cart = $_SESSION['cart'] ?? [];
-        // $cart[$product_id] = $cart[$product_id] + $quantity ?? $quantity;
-        // $_SESSION['cart'] = $cart;
-
-        // echo json_encode(array('message' => 'Product added to cart', 'status' => 'Success'));
+        
+        
+        
     }
     catch(PDOException $e)
     {
