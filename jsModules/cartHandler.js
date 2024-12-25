@@ -54,7 +54,7 @@ function updateCart() {
                         })}
                     </span>
                 </div>
-                <button onclick="checkout()" 
+                <button onclick="createCommand(${total})" 
                         class="btn-gradient w-full mt-6 py-3 rounded-lg text-white font-semibold">
                     Finaliser l'achat
                 </button>
@@ -97,6 +97,34 @@ async function removeFromCart(id) {
     }
   
   
+}
+async function createCommand(total){
+      const userChoice = confirm("Voulez-vous vraiment finaliser votre achat?");
+      if(userChoice)
+      {
+        
+        
+        const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/setCommands.php',{
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({total: total})
+        })
+        const result = await response.json();
+        if(result.status == 'success'){
+          showToast(result.message);
+        }
+        else{
+          showToast(result.error);
+        }
+        
+
+      }
+      else{
+        showToast("Opération annulée");
+      }
+
 }
 function showToast(message) {
   const toast = document.getElementById("toast");
