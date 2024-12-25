@@ -7,6 +7,7 @@
     <title>Tableau de Bord Vendeur</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="../jsModules/productsUpdateAdmin.js"></script>
 
     <style>
         #reveal-sidebar {
@@ -79,7 +80,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500">
                     <h3 class="text-gray-500 mb-2">Total des Produits</h3>
-                    <p class="text-2xl font-bold text-gray-800">24</p>
+                    <p class="text-2xl font-bold text-gray-800" id="product-number"></p>
                 </div>
                 <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500">
                     <h3 class="text-gray-500 mb-2">Total des Commandes</h3>

@@ -19,6 +19,15 @@ const handleModifyProduct = async(event) => {
     });
     const result = await response.json();
     if(result.status == "Updated") {
+        // const updaetProducts = await fetch('http://localhost/TP_Projects/Ecomerce/routes/products.php',{
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }
+        // })
+        // const responseUpdate = await updaetProducts.json();
+        // localStorage.setItem('products', JSON.stringify(responseUpdate));
+        // console.log(JSON.parse(localStorage.getItem('products')));
         showToast('Product modified successfully');
         setTimeout(() => {
             window.location.href = 'http://localhost/TP_Projects/Ecomerce/views/sellerProducts.html';
@@ -26,6 +35,7 @@ const handleModifyProduct = async(event) => {
     } else {
         showToast(result.error);
     }
+    
 }
 
 
