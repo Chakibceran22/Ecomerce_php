@@ -1,7 +1,6 @@
 
 
 
-
 const handleLoginRequest = async(event) => {
     event.preventDefault();
     const username = document.getElementById('username').value;
@@ -11,7 +10,7 @@ const handleLoginRequest = async(event) => {
         password
     }
     try{
-        console.log(data);
+       
         const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/login.php', {
             method: 'POST',
             headers: {
@@ -20,7 +19,7 @@ const handleLoginRequest = async(event) => {
             body: JSON.stringify(data)
         })
         const result = await response.json();
-        console.log(result);
+        
         
         if(result.status == 'success'){
              showToast('Login Success');
