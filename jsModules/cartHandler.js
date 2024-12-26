@@ -102,24 +102,26 @@ async function createCommand(total){
       const userChoice = confirm("Voulez-vous vraiment finaliser votre achat?");
       if(userChoice)
       {
-        
+        const products_ids = Object.fromEntries(cart.map(item => [item.id, item.qnt]));
         
         const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/setCommands.php',{
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({total: total})
+          body: JSON.stringify({total: total, products_ids: products_ids})
         })
         const result = await response.json();
         if(result.status == 'success'){
           showToast(result.message);
+          cart.map(async(item) => {
+            removeFromCart(item.id);
+            console.log("hello its done")
+          })
         }
         else{
           showToast(result.error);
         }
-        
-
       }
       else{
         showToast("Opération annulée");

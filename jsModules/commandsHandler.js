@@ -38,7 +38,7 @@ const displayCommands = async () => {
         // Add the table row with the correct status class
         tableBody.innerHTML += `
         <tr class="border-b hover:bg-gray-50">
-            <td class="p-3">${command.id}</td>
+            <td class="p-3">#${command.id}</td>
             <td class="p-3">${command.user_id}</td>
             <td class="p-3">${command.date}</td>
             <td class="p-3">
