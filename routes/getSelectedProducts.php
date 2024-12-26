@@ -8,16 +8,20 @@
         exit();
     }
 
-    if(empty($data['ids'])){
+    if(empty($data['ids']) || empty($data['id'])){
         echo json_encode(['error' => 'Ids are required']);
         exit();
     }//this to get the products all for a command using their ids
     try{
         $ids = $data['ids'];
+        $id = $data['id'];
         $query = $connection->prepare(('SELECT * FROM products WHERE id IN ('.implode(',', array_fill(0, count($ids), '?')).')'));
         $query->execute($ids);
         $products = $query->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode(['status'=> "success",'products' => $products]);
+        $quntQuery = $connection->prepare('SELECT products_ids FROM commands WHERE id = ?');
+        $quntQuery->execute([$id]);
+        $qunt = $quntQuery->fetch(PDO::FETCH_ASSOC);
+        echo json_encode(['status'=> "success",'products' => $products,'products_ids' => $qunt]);
         exit();
     }catch(PDOException $e){
         echo json_encode(['error' => 'An error occured while getting the products']);

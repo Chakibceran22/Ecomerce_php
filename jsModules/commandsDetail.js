@@ -1,5 +1,8 @@
 let products = []
+let qunt = []
 const getCommandDetails = async() => {
+    const params = new URLSearchParams(window.location.search);
+    const idCommand = params.get('id');
     const productsIds = JSON.parse(localStorage.getItem('user_command_details'))
     const productKeys = Object.keys(productsIds).map(key => parseInt(key))
     const response = await fetch('http://localhost/TP_Projects/Ecomerce/routes/getSelectedProducts.php',{
@@ -7,11 +10,16 @@ const getCommandDetails = async() => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ids :productKeys})
+        body: JSON.stringify({ids :productKeys, id: idCommand})
     })
     const result = await response.json();
     if(result.status === 'success'){
       products = result.products;
+      console.log(products);
+      qunt = result.products_ids.products_ids;
+      qunt = JSON.parse(qunt);
+      qunt = Object.values(qunt);
+      
       displayProducts();
     }
     else{
@@ -42,7 +50,7 @@ function displayProducts(productsToShow = products) {
                                 product.price
                               }&euro;</span>
                               <span class="text-sm text-gray-500">Stock: ${
-                                product.stock
+                                qunt[index]
                               }</span>
                           </div>
                           
