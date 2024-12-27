@@ -1,6 +1,6 @@
 <?php 
     include('../modules/db.php');
-
+    header('Content-Type: application/json');
     try{
         $sql = "SELECT * FROM products";
         $result = $connection->query($sql);
