@@ -50,7 +50,7 @@ const displayCommands = async () => {
             <td class="p-3">
                 <div class="flex justify-center space-x-2">
                     ${buttonExist}
-                    <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition">
+                    <button class="px-3 py-1 border-2 border-purple-500 text-purple-600 font-bold rounded-lg hover:bg-purple-50 transition" onclick="viewCommandDetails(${command.id})">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -85,4 +85,7 @@ const refuseCommand = async(id) => {
     const result = await response.json();
     console.log(result);
     window.location.reload();
+}
+const viewCommandDetails = (id) => {
+    window.location.href = `http://localhost/TP_Projects/Ecomerce/views/adminCommandDetails.html?id=${id}`;
 }
