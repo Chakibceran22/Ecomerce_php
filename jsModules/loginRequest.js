@@ -35,7 +35,7 @@ const handleLoginRequest = async(event) => {
                 setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/userDahsbord.html';}, 1500);
                 return;
             }
-            // window.location.href = '/TP_Projects/Ecomerce/views/mainPage.html';
+            // window.location.href = '/TP_Projects/Ecomerce/views/index.html';
         }
         else{
             showToast(result.error)

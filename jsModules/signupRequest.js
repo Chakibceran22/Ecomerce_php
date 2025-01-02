@@ -2,10 +2,13 @@ const handSignUpRequest = async (event) => {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
     const data = {
         username,
         password,
+        email
     }
+   
     try{
         const response = await fetch('/TP_Projects/Ecomerce/routes/signup.php', {
             method: 'POST',
@@ -19,7 +22,6 @@ const handSignUpRequest = async (event) => {
         
         if(result.status == 'Created'){
             showToast(result.message);
-            
             setTimeout(() => {window.location.href = '/TP_Projects/Ecomerce/views/loginPage.html';}, 1500);
         }
         else{

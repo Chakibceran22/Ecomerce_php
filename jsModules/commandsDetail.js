@@ -49,7 +49,7 @@ function displayProducts(productsToShow = products) {
                               <span class="text-2xl font-bold text-purple-600">${
                                 product.price
                               }&euro;</span>
-                              <span class="text-sm text-gray-500">Stock: ${
+                              <span class="text-sm text-gray-500">Quantity: ${
                                 qunt[index]
                               }</span>
                           </div>

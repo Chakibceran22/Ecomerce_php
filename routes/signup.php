@@ -13,9 +13,10 @@
 
     $username = $data['username'];
     $password = $data['password'];
+    $email = $data['email'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     
-    if(empty($username) || empty($password) )
+    if(empty($username) || empty($password) || empty($email))
     {
         echo json_encode(array('error' => 'All input fields are required'));
         http_response_code(400);
@@ -23,8 +24,8 @@
     }
    
     try{
-        $query = $connection->prepare('INSERT INTO users ( username ,password) VALUES (?, ?)');
-        $query->execute([$username, $hashed_password]);
+        $query = $connection->prepare('INSERT INTO users ( username ,password,email) VALUES (?, ?,?)');
+        $query->execute([$username, $hashed_password, $email]);
         echo json_encode(array('message' => 'User created successfully', 'status' => 'Created'));
 
     }catch(Exception $e){
