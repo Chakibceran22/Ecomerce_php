@@ -2,9 +2,10 @@ const handleAddProduct = async (event) => {
     event.preventDefault();
     const name = document.getElementById('product-name').value;
     const price = parseFloat( document.getElementById('product-price').value);
-    const description = document.getElementById('product-description').value;
+    let description = document.getElementById('product-description').value;
     const image = document.getElementById('product-image-url').value;
     const stock = parseInt(document.getElementById('product-stock').value);
+    description = description.trim();
 
     const data = {
         name,
@@ -32,7 +33,6 @@ const handleAddProduct = async (event) => {
         // const resultProducts = await getProductsResponse.json();
         // localStorage.setItem('products', JSON.stringify(resultProducts));
         showToast('Product added successfully');
-        window.location.reload();
     } else {
         showToast(result.error)
     }

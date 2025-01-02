@@ -8,9 +8,7 @@ const getUserProducts = async() => {
         }
     })
     const result = await response.json();
-    products.push(...result.products);
-    console.log(products)
-    console.log(cart)
+    products = result.products;
   
     displayProducts(products);
     setupFilters();
@@ -19,85 +17,14 @@ const getUserProducts = async() => {
 
 
 
-// function addToCart(productId,products) {
-//     console.log(productId);
-//     const product = products.find((p) => p.id == productId);
-//     const existingItem = cart.find((item) => item.id == productId);
-//     if (product.stock == 0) {
-//       updateCart();
-//       showToast("Désolé, ce produit est en rupture de stock");
-//       displayProducts();
-//       return;
-//     }
-//     if (existingItem) {
-//       existingItem.quantity++;
-//     } else {
-//       cart.push({ ...product, quantity: 1 });
-//     }
-  
-//     updateCart();
-//   }
-// function updateCart() {
-//     const cartItems = document.getElementById("cart-items");
-//     const cartTotal = document.getElementById("cart-total");
-//     let total = 0;
-  
-//     cartItems.innerHTML = cart
-//       .map((item) => {
-//         const itemTotal = item.price * item.quantity;
-//         total += itemTotal;
-//         return `
-//                       <div class="cart-item flex justify-between items-center py-4 border-b border-gray-100">
-//                           <div class="flex items-center gap-4">
-//                               <img src="${item.image}" alt="${
-//           item.name
-//         }" class="w-16 h-16 object-cover rounded-lg">
-//                               <div>
-//                                   <h4 class="font-medium">${item.name}</h4>
-//                                   <p class="text-gray-600">Quantité: ${
-//                                     item.quantity
-//                                   }</p>
-//                               </div>
-//                           </div>
-//                           <div class="flex items-center gap-4">
-//                               <span class="font-semibold">${itemTotal.toLocaleString(
-//                                 "fr-FR",
-//                                 { style: "currency", currency: "EUR" }
-//                               )}</span>
-//                               <button onclick="removeFromCart(${item.id})" 
-//                                       class="text-red-500 hover:text-red-700 transition">
-//                                   Supprimer
-//                               </button>
-//                           </div>
-//                       </div>
-//                   `;
-//       })
-//       .join("");
-  
-//     cartTotal.innerHTML = cart.length
-//       ? `
-//                   <div class="flex justify-between items-center">
-//                       <span class="text-xl font-semibold">Total</span>
-//                       <span class="text-2xl font-bold text-purple-600">
-//                           ${total.toLocaleString("fr-FR", {
-//                             style: "currency",
-//                             currency: "EUR",
-//                           })}
-//                       </span>
-//                   </div>
-//                   <button onclick="checkout()" 
-//                           class="btn-gradient w-full mt-6 py-3 rounded-lg text-white font-semibold">
-//                       Finaliser l'achat
-//                   </button>
-//               `
-//       : '<p class="text-gray-500 text-center">Votre panier est vide</p>';
-//   }
+
 function displayProducts(productsToShow = products ) {
   const grid = document.getElementById("products-grid");
   grid.innerHTML = "";
   
 
   productsToShow.forEach((product, index) => {
+
     const inCart = cart.some((item) => item.id === product.id);
     
 
@@ -127,9 +54,15 @@ function displayProducts(productsToShow = products ) {
                               product.stock
                             }</span>
                         </div>
-                        <button onclick="goToProductPage('${product.id}', '${product.name}', '${product.price}', '${product.stock}', '${product.image}','${product.description}')" 
-                                class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
-                            Visualiser Produit
+                        <button data-id="${product.id}"
+                                data-name="${product.name}"
+                                data-price="${product.price}"
+                                data-stock="${product.stock}"
+                                data-image="${product.image}"
+                                data-description="${product.description}"
+                                onclick="goToProductPage(this)"
+                        class="btn-gradient w-full py-3 px-4 rounded-lg text-white font-semibold">
+                          Visualiser Produit
                         </button>
                     </div>
                 `;
@@ -161,8 +94,14 @@ function setupFilters() {
   priceFilter.addEventListener("input", filterProducts);
 }
 
-function goToProductPage(id, name, price, stock, image,desc) {
-  window.location.href = `http://localhost/TP_Projects/Ecomerce/views/productPage.html?id=${id}&name=${name}&price=${price}&stock=${stock}&image=${image}&desc=${desc}`;
+function goToProductPage(button) {
+  const id = button.dataset.id;
+  const name = button.dataset.name;
+  const price = button.dataset.price;
+  const stock = button.dataset.stock;
+  const image = button.dataset.image;
+  const description = button.dataset.description;
+  window.location.href = `http://localhost/TP_Projects/Ecomerce/views/productPage.html?id=${id}&name=${name}&price=${price}&stock=${stock}&image=${image}&desc=${description}`;
   // ?id=${id}&name=${name}&price=${price}&stock=${stock}&image=${image}
 }
 window.onload = getUserProducts;
