@@ -98,6 +98,37 @@ async function removeFromCart(id) {
   
   
 }
+async function removeFromCartWithoutConfirm(id) {
+  const response = await fetch('/TP_Projects/Ecomerce/routes/deleteProductFromCart.php',{
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({id})
+})
+const result = await response.json();
+console.log(result);
+if(result.status == 'Deleted'){
+    showToast("Artcile Commandee avec succes");
+    const updateCart = await fetch('http://localhost/TP_Projects/Ecomerce/routes/getUsersCart.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+    })
+    const result = await updateCart.json();
+    localStorage.setItem('cart', JSON.stringify(result.cart));
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+}
+else{
+    showToast(result.error);
+}
+  
+  
+}
 async function createCommand(total){
       const userChoice = confirm("Voulez-vous vraiment finaliser votre achat?");
       if(userChoice)
@@ -115,8 +146,7 @@ async function createCommand(total){
         if(result.status == 'success'){
           showToast(result.message);
           cart.map(async(item) => {
-            removeFromCart(item.id);
-            console.log("hello its done")
+            removeFromCartWithoutConfirm(item.id);
           })
         }
         else{
